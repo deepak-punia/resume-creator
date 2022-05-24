@@ -1,12 +1,169 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1> {{msg}} </h1>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<style>
+			header.header{ padding: 0; border-bottom: 5px solid #dfe3ee; } table{
+			width: 100%; } td{ vertical-align: top; } td.info-middle{ padding: 20px
+			20px; } td.info-middle h1{ font-weight: bold; }
+			td.content-education h3{ padding-left: 100px } td.content-education p{
+			padding: 15px 20px 5px 150px; } td.content p{ padding: 15px 20px 5px
+			150px; } td.location{ text-align: right; } h1{ font-size: 3.2em;
+			font-weight: 700; } h2{ font-size: 2.0; font-weight: 700; } .info-small p{
+			font-size: 1em; margin: 3px 0; } .info-middle{ vertical-align: middle;
+			background-color: #3b5998; color: #ffffff; } hr.section-break{ margin: 0
+			auto 10px auto; border: 3px solid #dfe3ee; } h2.sec-label{ margin-top:
+			15px; color: #3b5998; font-size: 30px;} .container h3{ color: #8b9dc3; }
+			td.content-education h2.sec-label{ padding-right: 170px } td.edu{
+			padding-right: 80px; }
+		</style>
+
+		<!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+		<!-- Personl Info Header -->
+		<header class="header container-fluid">
+			<table>
+				<tr>
+					<td class="info-middle">
+						<h1>{{name}}</h1>
+					</td>
+					<td class="info-small text-right info-middle">
+						<p>{{address}}</p>
+						<p>Ph: {{phone}} | Email: {{email}}</p>
+					</td>
+				</tr>
+			</table>
+		</header>
+
+		<div class="container">
+			<!-- Technical Skills Section -->
+			<table>
+				<tr>
+					<td>
+						<h2 class="sec-label">Technical Skills</h2>
+					</td>
+					<td>
+						<h3></h3>
+						<ul>
+							{{#each skills1}}
+								<li>{{this}}</li>
+							{{/each}}
+
+						</ul>
+					</td>
+					<td>
+						<h3></h3>
+						<ul>
+								{{#each skills2}}
+								<li>{{this}}</li>
+							{{/each}}
+
+						</ul>
+					</td>
+					<td>
+						<h3></h3>
+						<ul>
+								{{#each skills3}}
+								<li>{{this}}</li>
+							{{/each}}
+						</ul>
+					</td>
+				</tr>
+
+			</table>
+			<hr class="section-break" />
+			<!-- Objective Section -->
+			<table>
+				<tr>
+					<td>
+						<h2 class="sec-label">Objective</h2>
+					</td>
+					<td class="content">
+						<p>{{objective}}</p>
+					</td>
+				</tr>
+			</table>
+			<hr class="section-break" />
+			<!-- Education Section -->
+			<table>
+				<tr>
+					<td class="edu">
+						<h2 class="sec-label">Education</h2>
+					</td>
+					<td class="content-education">
+						<h3>{{education1/time}} {{education1/university}}</h3>
+						<p>Course: {{education1/course}}</p>
+						<p>Achievement: {{education1/achievement}}</p>
+					</td>
+					<td class="location">
+						<h3>{{education1/location}}</h3>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<!--null space-->
+					</td>
+					<td class="content-education">
+						<h3>{{education2/time}} {{education2/university}}</h3>
+						<p>Course: {{education2/course}}</p>
+						<p>Achievement: {{education2/achievement}}</p>
+					</td>
+					<td class="location">
+						<h3>{{education2/location}}</h3>
+					</td>
+				</tr>
+				
+			</table>
+			<hr class="section-break" />
+			<!-- Work Experience Section -->
+			<table>
+				<tr>
+					<td>
+						<h2 class="sec-label">Work Experience</h2>
+					</td>
+					<td class="content">
+						<h3>{{work1/time}} &nbsp; &nbsp;<span><strong>{{work1/company}}</strong></span></h3>
+						<h3>{{work1/position}}</h3>
+						<ul>
+                            {{#each work1/details}}
+								<li>{{this}}</li>
+							{{/each}}
+		
+						</ul>
+					</td>
+					<td class="location">
+						<h3>{{work1/location}}</h3>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<!--null space-->
+					</td>
+					<td class="content">
+						<h3>{{work2/time}} &nbsp; &nbsp;<span><strong>{{work2/company}}</strong></span></h3>
+						<h3>{{work2/position}}</h3>
+						<ul>
+                            {{#each work2/details}}
+								<li>{{this}}</li>
+							{{/each}}
+		
+						</ul>
+					</td>
+					<td class="location">
+						<h3>{{work2/location}}</h3>
+					</td>
+				</tr>
+				{{#if watermark}}
+                    <td class="info-small text-right info-middle"><p>Resume Creator - Unregistered version</p></td>
+                    {{/if}}
+			</table>
+		</div>
+
+	</body>
 </html>

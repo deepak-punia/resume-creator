@@ -25,6 +25,7 @@ app.get('/',(req,res)=>{
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/login', require('./routes/api/login'));
 app.use('/api/download', require('./routes/api/download'));
+app.use('/api/myresume', require('./routes/api/myresume'));
 
 app.listen(PORT, ()=>{
     console.log(`Server is running at port : ${PORT}`);
