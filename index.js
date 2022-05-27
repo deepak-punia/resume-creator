@@ -1,7 +1,12 @@
 const express = require('express');
+const cors = require('cors');
 const connectDB = require('./config/db');
 const app = express();
 const handlebars = require('express-handlebars');
+
+app.use(cors({
+    origin: '*',
+}));
 
 app.engine('hbs', handlebars.engine({
     layoutsDir: __dirname + '/views/',

@@ -1,169 +1,296 @@
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
-	</head>
-	<body>
-		<style>
-			header.header{ padding: 0; border-bottom: 5px solid #dfe3ee; } table{
-			width: 100%; } td{ vertical-align: top; } td.info-middle{ padding: 20px
-			20px; } td.info-middle h1{ font-weight: bold; }
-			td.content-education h3{ padding-left: 100px } td.content-education p{
-			padding: 15px 20px 5px 150px; } td.content p{ padding: 15px 20px 5px
-			150px; } td.location{ text-align: right; } h1{ font-size: 3.2em;
-			font-weight: 700; } h2{ font-size: 2.0; font-weight: 700; } .info-small p{
-			font-size: 1em; margin: 3px 0; } .info-middle{ vertical-align: middle;
-			background-color: #3b5998; color: #ffffff; } hr.section-break{ margin: 0
-			auto 10px auto; border: 3px solid #dfe3ee; } h2.sec-label{ margin-top:
-			15px; color: #3b5998; font-size: 30px;} .container h3{ color: #8b9dc3; }
-			td.content-education h2.sec-label{ padding-right: 170px } td.edu{
-			padding-right: 80px; }
-		</style>
 
-		<!--[if lt IE 8]>
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Document</title>
+</head>
+
+<body>
+	<style>
+		.A4 {
+    background: white;
+    width: 21cm;
+    display: block;
+    margin: 0 auto;
+    padding: 10px 25px;
+    margin-bottom: 0.5cm;
+    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+    overflow-y: scroll;
+    box-sizing: border-box;
+    font-size: 12pt;
+    overflow: hidden;
+}
+
+@media print {
+    .page-break {
+        display: block;
+        page-break-before: always;
+    }
+
+    size: A4 portrait;
+}
+
+@media print {
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .A4 {
+        box-shadow: none;
+        margin: 0;
+        width: auto;
+        height: auto;
+    }
+
+    .noprint {
+        display: none;
+    }
+
+    .enable-print {
+        display: block;
+    }
+}
+
+.header-wrapper {
+    width: 100%;
+    display: inline-block;
+    margin: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+}
+
+.skills-wrapper {
+    width: 100%;
+    display: inline-block;
+    margin: 0;
+    padding-top: 5px;
+
+}
+
+.education-wrapper {
+    width: 100%;
+    display: inline-block;
+    margin: 0;
+    padding-top: 5px;
+
+}
+
+.name-container {
+    display: inline-block;
+    float: left;
+    width: 33%;
+}
+
+.email-container {
+    display: inline-block;
+    float: right;
+    width: 35%;
+    margin: 0;
+}
+
+hr.new1 {
+    border: 1px solid;
+    margin: 5px;
+    padding: 0;
+
+
+}
+
+h1,
+h2.left-side {
+    padding: 0;
+    margin: 0;
+}
+
+hr {
+    margin: 0;
+    padding: 0;
+}
+
+.left-container {
+    display: inline-block;
+    float: left;
+    width: 25%;
+
+
+}
+
+.right-container {
+    display: inline-block;
+    float: right;
+    width: 75%;
+    align-content: center;
+
+
+}
+
+.left-text {
+    display: inline-block;
+    float: left;
+
+
+
+}
+
+.right-text {
+    display: inline-block;
+    float: right;
+
+
+}
+
+.list-container1 {
+    display: inline-block;
+    float: left;
+    width: 33%;
+}
+	</style>
+
+	<!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	
+	<div class="A4">
+		<div class="header-wrapper">
+			<div class="name-container">
+				<h1>
+					{{name}}
+				</h1>
+			</div>
+			<div class="content-container">
 
-		<!-- Personl Info Header -->
-		<header class="header container-fluid">
-			<table>
-				<tr>
-					<td class="info-middle">
-						<h1>{{name}}</h1>
-					</td>
-					<td class="info-small text-right info-middle">
-						<p>{{address}}</p>
-						<p>Ph: {{phone}} | Email: {{email}}</p>
-					</td>
-				</tr>
-			</table>
-		</header>
+			</div>
+			<div class="email-container">
+				<i class="bi bi-house"> {{address}}</i><br />
+				<i class="bi bi-envelope"> {{email}} </i><br />
+				<i class="bi bi-telephone"> {{phone}}</i>
+			</div>
+		</div>
+		<hr class="new1" />
 
-		<div class="container">
-			<!-- Technical Skills Section -->
-			<table>
-				<tr>
-					<td>
-						<h2 class="sec-label">Technical Skills</h2>
-					</td>
-					<td>
-						<h3></h3>
-						<ul>
+		<div class="skills-wrapper">
+
+			<div class="left-container">
+				<h2 class="left-side">
+					<p class="fst-italic">Objective</p>
+				</h2>
+			</div>
+			<div class="right-container">
+				<div style="width:100%;">
+					{{objective}}
+				</div>
+			</div>
+		</div>
+		<hr />
+
+		<div class="skills-wrapper">
+
+			<div class="left-container">
+				<h2 class="left-side">
+					<p class="fst-italic">Key Skills</p>
+				</h2>
+			</div>
+			<div class="right-container">
+				<div style="width:100%;">
+					<div class="list-container1">
+						<ul style="list-style-type:none;">
 							{{#each skills1}}
-								<li>{{this}}</li>
-							{{/each}}
+						<li><i class="bi bi-check">{{this}}</i></li>
+						{{/each}}
+							
+						</ul>
+					</div>
+					<div class="list-container1">
+						<ul style="list-style-type:none;">
+							{{#each skills2}}
+						<li><i class="bi bi-check">{{this}}</i></li>
+						{{/each}}
+						</ul>
+					</div>
+					<div class="list-container1">
+						<ul style="list-style-type:none;">
+							{{#each skills3}}
+						<li><i class="bi bi-check">{{this}}</i></li>
+						{{/each}}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr />
+		<div class="skills-wrapper">
 
-						</ul>
-					</td>
-					<td>
-						<h3></h3>
-						<ul>
-								{{#each skills2}}
-								<li>{{this}}</li>
-							{{/each}}
+			<div class="left-container">
+				<h2 class="left-side">
+					<p class="fst-italic"> Education</p>
+				</h2>
+			</div>
+			<div class="right-container">
 
-						</ul>
-					</td>
-					<td>
-						<h3></h3>
-						<ul>
-								{{#each skills3}}
-								<li>{{this}}</li>
-							{{/each}}
-						</ul>
-					</td>
-				</tr>
+				<div style="width:100%;">
+					<div class="left-text"><strong>{{education1/university}} </strong></div>
+					<div class="right-text">{{education1/time}}</div>
+				</div><br />{{education1/course}}<br />{{education1/location}} <br />{{education1/achievement}}
+				<br /><br />
+				<div style="width:100%;">
+					<div class="left-text"><strong>{{education2/university}} </strong></div>
+					<div class="right-text">{{education2/time}}</div>
+				</div><br />{{education2/course}} <br /> {{education2/location}} <br />{{education2/achievement}}
 
-			</table>
-			<hr class="section-break" />
-			<!-- Objective Section -->
-			<table>
-				<tr>
-					<td>
-						<h2 class="sec-label">Objective</h2>
-					</td>
-					<td class="content">
-						<p>{{objective}}</p>
-					</td>
-				</tr>
-			</table>
-			<hr class="section-break" />
-			<!-- Education Section -->
-			<table>
-				<tr>
-					<td class="edu">
-						<h2 class="sec-label">Education</h2>
-					</td>
-					<td class="content-education">
-						<h3>{{education1/time}} {{education1/university}}</h3>
-						<p>Course: {{education1/course}}</p>
-						<p>Achievement: {{education1/achievement}}</p>
-					</td>
-					<td class="location">
-						<h3>{{education1/location}}</h3>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<!--null space-->
-					</td>
-					<td class="content-education">
-						<h3>{{education2/time}} {{education2/university}}</h3>
-						<p>Course: {{education2/course}}</p>
-						<p>Achievement: {{education2/achievement}}</p>
-					</td>
-					<td class="location">
-						<h3>{{education2/location}}</h3>
-					</td>
-				</tr>
-				
-			</table>
-			<hr class="section-break" />
-			<!-- Work Experience Section -->
-			<table>
-				<tr>
-					<td>
-						<h2 class="sec-label">Work Experience</h2>
-					</td>
-					<td class="content">
-						<h3>{{work1/time}} &nbsp; &nbsp;<span><strong>{{work1/company}}</strong></span></h3>
-						<h3>{{work1/position}}</h3>
-						<ul>
-                            {{#each work1/details}}
-								<li>{{this}}</li>
-							{{/each}}
-		
-						</ul>
-					</td>
-					<td class="location">
-						<h3>{{work1/location}}</h3>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<!--null space-->
-					</td>
-					<td class="content">
-						<h3>{{work2/time}} &nbsp; &nbsp;<span><strong>{{work2/company}}</strong></span></h3>
-						<h3>{{work2/position}}</h3>
-						<ul>
-                            {{#each work2/details}}
-								<li>{{this}}</li>
-							{{/each}}
-		
-						</ul>
-					</td>
-					<td class="location">
-						<h3>{{work2/location}}</h3>
-					</td>
-				</tr>
-				{{#if watermark}}
-                    <td class="info-small text-right info-middle"><p>Resume Creator - Unregistered version</p></td>
-                    {{/if}}
-			</table>
+			</div>
+
 		</div>
 
-	</body>
+		<hr />
+		<div class="skills-wrapper">
+			<div class="left-container">
+				<h2 class="left-side">
+					<p class="fst-italic"> Experiance </p>
+				</h2>
+			</div>
+			<div class="right-container">
+
+				<div style="width:100%;">
+					<div class="left-text"><strong>{{work1/position}}</strong></div>
+					<div class="right-text">{{work1/time}}</div>
+				</div> <br /><strong>{{work1/company}} </strong><br />
+				<ul>
+					{{#each work1/details}}
+						<li>{{this}}</li>
+						{{/each}}
+				</ul>
+				<br /><br />
+				<div style="width:100%;">
+					<div class="left-text"><strong>{{work2/position}}</strong></div>
+					<div class="right-text">{{work2/time}}</div>
+				</div> <br /><strong>{{work2/company}} </strong><br />
+				<ul>
+					{{#each work2/details}}
+						<li>{{this}}</li>
+						{{/each}}
+				</ul>
+			
+			</div>
+		</div>
+	{{#if watermark}}
+			<td class="info-small text-right info-middle">
+				<p>Resume Creator - Unregistered version</p>
+			</td>
+			{{/if}}
+	</div>
+
+
+	</div>
+
+	
+
+</body>
+
 </html>
