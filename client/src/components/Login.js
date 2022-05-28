@@ -1,11 +1,10 @@
-import { Form, Button , Container, Col, Row} from "react-bootstrap";
+import { Form, Button , Container, Row, Col} from "react-bootstrap";
 import { useState } from "react";
 import { setAlert } from "../actions/alert";
-import { register } from "../actions/auth";
+import { login } from "../actions/auth";
 import { useSelector, useDispatch } from "react-redux";
 
-const Register = () => {
-	const [name, setName] = useState("");
+const Login = () => {
 	const [email, setEmail] = useState("");
 	const [pass, setPass] = useState("");
 
@@ -14,24 +13,14 @@ const Register = () => {
 	const handleRegisterSubmit = (e) => {
         console.log('OK')
 		e.preventDefault();
-		dispatch(register({ name, email, password:pass }));
+		dispatch(login({ email, password:pass }));
 	};
 	return (
-		<Container className="p-5 bg-light">
+		<Container className="p-5 h-100 bg-light">
 			<Row>
 				<Col>
-				
 		<Form>
-			<h2>Register</h2>
-			<Form.Group className="mb-3" controlId="formBasicUserName">
-				<Form.Label>User Name</Form.Label>
-				<Form.Control
-					type="text"
-					placeholder="Enter youu name"
-					value={name}
-					onChange={(e) => setName(e.target.value)}
-				/>
-			</Form.Group>
+			<h2>Login</h2>
 
 			<Form.Group className="mb-3" controlId="formBasicEmail">
 				<Form.Label>Email address</Form.Label>
@@ -68,4 +57,4 @@ const Register = () => {
 	);
 };
 
-export default Register;
+export default Login;

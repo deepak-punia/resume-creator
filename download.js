@@ -2,26 +2,29 @@ const express = require("express");
 const { check, validationResult } = require("express-validator");
 const router = express.Router();
 const Puppeteer = require("puppeteer");
-const auth = require("../../middleware/auth");
-const User = require("../../models/users");
-const Resume = require("../../models/resume");
+const auth = require("./middleware/auth");
+const User = require("./models/users");
+const Resume = require("./models/resume");
+const path = require('path');
+
 
 //create a pdf with
 //@data - html data for pdf
 const pdf = async (data) => {
+	
 	const browser = await Puppeteer.launch({ headless: true });
 	const page = await browser.newPage();
 	await page.setContent(data);
 
-	const pdf = await page.pdf({ format: "A4" });
+	const pdf = await page.pdf({ path: 'resume.pdf',format: "A4" });
 	await browser.close();
 	return pdf;
 };
 
-//@route     GET api/download
+//@route     POST api/download
 //@desc      Download resume without registeration / watermark present on pdf file
 //@access    Public
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
 	const {
 		name,
 		address,
@@ -36,7 +39,7 @@ router.get("/", async (req, res) => {
 		work1,
 		work2,
 	} = req.body;
-
+	console.log(name);
 	res.render(
 		"main",
 		{
@@ -59,14 +62,20 @@ router.get("/", async (req, res) => {
 				console.log(error);
 			}
 
+			
 			const pdfFile = await pdf(html);
-			res.set({
-				"Content-Type": "application/pdf",
-				"Content-Length": pdf.length,
-			});
-			res.send(pdfFile);
+			
+			 
+			res.json({msg:'created'})
 		}
 	);
+});
+
+//@route     GET api/download
+//@desc      Download resume without registeration / watermark present on pdf file
+//@access    Public
+router.get("/", (req, res) => {
+	res.sendFile(`${__dirname}/resume.pdf`)
 });
 
 //@route     GET api/download/user
@@ -87,7 +96,7 @@ router.get("/user", auth, async (req, res) => {
 		work1,
 		work2,
 	} = req.body;
-
+	
 	res.render(
 		"main",
 		{
@@ -115,7 +124,7 @@ router.get("/user", auth, async (req, res) => {
 				"Content-Type": "application/pdf",
 				"Content-Length": pdf.length,
 			});
-			res.send(pdfFile);
+			res.json({msg:'created'});
 		}
 	);
 });

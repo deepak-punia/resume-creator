@@ -5,6 +5,7 @@ import {
 	USER_LOADED,
 	AUTH_ERROR,
 	LOGOUT,
+	LOGIN
 } from "./types";
 import { setAlert } from "./alert";
 import setAuthToken from "../utils/setAuthToken";
@@ -63,6 +64,40 @@ export const register =
 			dispatch(setAlert("Register Failed", "danger"));
 			dispatch({
 				type: REGISTER_FAIL,
+			});
+		}
+	};
+
+//Login User
+export const login =
+	({ email, password }) =>
+	async (dispatch) => {
+		const body = JSON.stringify({  email, password });
+
+		const config = {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		};
+		try {
+			const response = await axios.post(
+				"http://localhost:5000/api/login",
+				body,
+				config
+			);
+
+			dispatch({
+				type: LOGIN,
+				payload: response.data,
+			});
+		} catch (error) {
+			console.log(error.response.data.errors);
+			error.response.data.errors.forEach(item=>{
+				dispatch(setAlert(item.msg, "danger"));
+			})
+			
+			dispatch({
+				type: AUTH_ERROR,
 			});
 		}
 	};
