@@ -1,77 +1,108 @@
 import { Form, Button, Container, Col, Row } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
 import StepFour from "./StepFour";
-import { dwnldResume } from "../../actions/resume";
-import { useSelector, useDispatch } from 'react-redux';
-import { saveAs } from 'file-saver';
-import axios from "axios";
+import Alerts from '../Alerts';
+import {setAlert} from '../../actions/alert';
+import {
+	dwnldResume,
+	dwnldResumeUser,
+	saveResume,
+	updateResumeData,
+} from "../../actions/resume";
+import { useSelector, useDispatch } from "react-redux";
 
-const Final = () => {
+const Final = ({refresh}={refresh: true}) => {
+	const [immediateStateChange, setimmediateStateChange] = useState(false);
+	const user = useSelector((state) => state.auth);
+	const userData = useSelector((state) => state.user);
+	const resumeData = useSelector((state) => state.resume);
 
-	const file = useSelector(state=>state.resume);
-
-	const dispatch= useDispatch();
+	const dispatch = useDispatch();
 	//testing validation
 	const [validated, setValidated] = useState(false);
 
 	//test code ends
 	const [details, setdetails] = useState({
-		detail1: "s",
-		detail2: "s",
-		detail3: "s",
-		detail4: "s",
+		detail1: "",
+		detail2: "",
+		detail3: "",
+		detail4: "",
 	});
 
 	const [skills, setskills] = useState({
-		skills1: "s",
-		skills2: "s",
-		skills3: "s",
-		skills4: "s",
-		skills5: "s",
-		skills6: "s",
+		skills1: "",
+		skills2: "",
+		skills3: "",
+		skills4: "",
+		skills5: "",
+		skills6: "",
 	});
 
 	const [formData, setformData] = useState({
-		name: "s",
-		address: "s",
-		phone: "s",
-		email: "s",
+		name: "",
+		address: "",
+		phone: "",
+		email: "",
 		skills1: [],
 		skills2: [],
 		skills3: [],
-		objective: "s",
+		objective: "",
 		education1: {
-			time: "s",
-			university: "s",
-			course: "s",
-			location: "s",
-			achievement: "s",
+			time: "",
+			university: "",
+			course: "",
+			location: "",
+			achievement: "",
 		},
 		education2: {
-			time: "s",
-			university: "s",
-			course: "s",
-			location: "s",
-			achievement: "s",
+			time: "",
+			university: "",
+			course: "",
+			location: "",
+			achievement: "",
 		},
 		work1: {
-			time: "s",
-			company: "s",
-			position: "s",
-			location: "s",
+			time: "",
+			company: "",
+			position: "",
+			location: "",
 			details: [],
 		},
 		work2: {
-			time: "s",
-			company: "s",
-			position: "s",
-			location: "s",
+			time: "",
+			company: "",
+			position: "",
+			location: "",
 			details: [],
 		},
 	});
+
+	useEffect(() => {
+
+		if (resumeData.saved) {
+			setformData(resumeData.data);
+
+			setskills({
+				skills1: resumeData.data.skills1[0],
+				skills2: resumeData.data.skills1[1],
+				skills3: resumeData.data.skills2[0],
+				skills4: resumeData.data.skills2[1],
+				skills5: resumeData.data.skills3[0],
+				skills6: resumeData.data.skills3[1],
+			});
+
+			setdetails({
+				detail1: resumeData.data.work1.details[0],
+				detail2: resumeData.data.work1.details[1],
+				detail3: resumeData.data.work2.details[0],
+				detail4: resumeData.data.work2.details[1],
+			});
+		}
+	}, [refresh]);
+
 	//state for steps
 	const [step, setstep] = useState(1);
 
@@ -85,6 +116,7 @@ const Final = () => {
 	const prevStep = (e) => {
 		e.preventDefault();
 		setstep(step - 1);
+		setimmediateStateChange(false);
 	};
 
 	//handle form data
@@ -140,41 +172,111 @@ const Final = () => {
 		}));
 	};
 
-	
-	
+	//handle update button
+	const handleUpdate = (e) => {
+		e.preventDefault();
+		dispatch(setAlert("Updating Data...", "info","final"));
+		dispatch(updateResumeData(formData));
+	};
 	//handle form submit
-	const handleSubmit = async(e) => {
+	const handleSubmit = async (e) => {
 		//test
 		const form = e.currentTarget;
 		if (form.checkValidity() === false) {
 			e.preventDefault();
+			dispatch(setAlert("Please input all required fields.", "danger","final"));
 			e.stopPropagation();
-			
-		}else{
-			
-		//test ends
+		} else {
+			//test ends
 
-		// prevents the submit button from refreshing the page
+			// prevents the submit button from refreshing the page
+			e.preventDefault();
+			setformData({
+				...formData,
+				skills1: [skills.skills1, skills.skills2],
+				skills2: [skills.skills3, skills.skills4],
+				skills3: [skills.skills5, skills.skills6],
+				work1: {
+					...formData.work1,
+					details: [details.detail1, details.detail2],
+				},
+				work2: {
+					...formData.work2,
+					details: [details.detail3, details.detail4],
+				},
+			});
+
+			if (user.isAuthenticated) {
+				dispatch(dwnldResumeUser(formData));
+				dispatch(setAlert("Downloading...", "info","final"));
+			} else {
+				dispatch(dwnldResume(formData));
+				dispatch(setAlert("Downloading...", "info","final"));
+			}
+		}
+		setValidated(true);
+	};
+
+	//save User resume data to database
+	const handleSaveClick = (e) => {
+		const form = e.currentTarget;
+		if (form.checkValidity() === false) {
+			e.preventDefault();
+			e.stopPropagation();
+		} else {
+			//test ends
+
+			// prevents the submit button from refreshing the page
+			e.preventDefault();
+			setformData({
+				...formData,
+				skills1: [skills.skills1, skills.skills2],
+				skills2: [skills.skills3, skills.skills4],
+				skills3: [skills.skills5, skills.skills6],
+				work1: {
+					...formData.work1,
+					details: [details.detail1, details.detail2],
+				},
+				work2: {
+					...formData.work2,
+					details: [details.detail3, details.detail4],
+				},
+			});
+
+			dispatch(setAlert("Saving data...", "info","final"));
+			dispatch(saveResume(formData));
+			
+		}
+		setValidated(true);
+	};
+
+	const handleFinish = (e) => {
 		e.preventDefault();
-		setformData({
-			...formData,
-			skills1: [skills.skills1, skills.skills2],
-			skills2: [skills.skills3, skills.skills4],
-			skills3: [skills.skills5, skills.skills6],
-			work1: {
-				...formData.work1,
-				details: [details.detail1, details.detail2],
-			},
-			work2: {
-				...formData.work2,
-				details: [details.detail3, details.detail4],
-			},
-		});
+		const form = e.currentTarget;
+		if (form.checkValidity() === false) {
+			e.preventDefault();
+			e.stopPropagation();
+		} else {
+			//test ends
 
-		console.log(formData);
-		
-		
-		dispatch(dwnldResume(formData));
+			// prevents the submit button from refreshing the page
+			e.preventDefault();
+			setformData({
+				...formData,
+				skills1: [skills.skills1, skills.skills2],
+				skills2: [skills.skills3, skills.skills4],
+				skills3: [skills.skills5, skills.skills6],
+				work1: {
+					...formData.work1,
+					details: [details.detail1, details.detail2],
+				},
+				work2: {
+					...formData.work2,
+					details: [details.detail3, details.detail4],
+				},
+			});
+
+			setimmediateStateChange(true);
 		}
 		setValidated(true);
 	};
@@ -191,6 +293,9 @@ const Final = () => {
 									<Button onClick={nextStep}>Next</Button>
 								</Form>
 							</Col>
+						</Row>
+						<Row>
+							<Alerts componentName={"final"}/>
 						</Row>
 					</Container>
 				</>
@@ -212,6 +317,9 @@ const Final = () => {
 								</Form>
 							</Col>
 						</Row>
+						<Row>
+							<Alerts componentName={"final"}/>
+						</Row>
 					</Container>
 				</>
 			);
@@ -227,6 +335,9 @@ const Final = () => {
 									<Button onClick={nextStep}>Next</Button>
 								</Form>
 							</Col>
+						</Row>
+						<Row>
+							<Alerts componentName={"final"}/>
 						</Row>
 					</Container>
 				</>
@@ -246,9 +357,29 @@ const Final = () => {
 										handleDetails={handleDetails}
 									/>
 									<Button onClick={prevStep}>Prev</Button>
-									<Button type="submit">Submit Data</Button>
+									<Button onClick={handleFinish}>Finish</Button>
+									{immediateStateChange ? (
+										<>
+											<Button type="submit">Download PDF</Button>
+											{user.isAuthenticated && !resumeData.saved ? (
+												<Button onClick={handleSaveClick}>Save Data</Button>
+											) : (
+												<></>
+											)}
+											{user.isAuthenticated && resumeData.saved ? (
+												<Button onClick={handleUpdate}>Update</Button>
+											) : (
+												<></>
+											)}
+										</>
+									) : (
+										<></>
+									)}
 								</Form>
 							</Col>
+						</Row>
+						<Row>
+							<Alerts componentName={"final"}/>
 						</Row>
 					</Container>
 				</>

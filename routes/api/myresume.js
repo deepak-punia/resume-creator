@@ -18,7 +18,7 @@ router.get("/", auth, async (req, res) => {
 		const user = await User.findOne({ email: req.user }).select("-password");
 		const resume = await Resume.findOne({ userID: user._id });
 		if (!resume) {
-			return res.json({
+			return res.status(400).json({
 				msg: "You don't have any resume saved. Please create one.",
 			});
 		}
@@ -31,7 +31,7 @@ router.get("/", auth, async (req, res) => {
 });
 
 //@route     POST api/myresume
-//@desc      Ppdate resume for user 
+//@desc      Update resume for user 
 //@access    Private
 router.post("/", auth, async (req, res) => {
 	
@@ -45,7 +45,7 @@ router.post("/", auth, async (req, res) => {
 
 		const alreadySaved = await Resume.findOne({ userID: user._id });
 		if (!alreadySaved) {
-			return res.json({
+			return res.status(400).json({
 				msg: "You don't have saved resume. Please create one and save.",
 			});
 		}

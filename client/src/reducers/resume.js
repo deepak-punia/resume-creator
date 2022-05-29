@@ -1,22 +1,25 @@
-import { dwnldResume } from "../actions/resume";
-import { DWNLD_RESUME, ERROR_RESUME } from "../actions/types";
+
+import { SAVE_RESUME, ERROR_RESUME , LOAD_RESUME, UPDATE_RESUME} from "../actions/types";
 
 
-export default function (state = {}, action) {
+export default function (state = {saved: false}, action) {
 	switch (action.type) {
-		
-		case DWNLD_RESUME:
+		case LOAD_RESUME:
+		case UPDATE_RESUME:
+		case SAVE_RESUME:
 			
 			return {
 				...state,
-				file: action.payload
+				data: action.payload,
+				saved: true,
 			};
 		
 		case ERROR_RESUME:
 			
 			return {
 				...state,
-				file: undefined
+				data: undefined,
+				saved: false,
 			};
 		
 		default:

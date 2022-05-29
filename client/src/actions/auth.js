@@ -5,16 +5,23 @@ import {
 	USER_LOADED,
 	AUTH_ERROR,
 	LOGOUT,
-	LOGIN
+	LOGIN,
+	ERROR_RESUME
 } from "./types";
 import { setAlert } from "./alert";
 import setAuthToken from "../utils/setAuthToken";
 
 //Logout user
 export const logout = () => (dispatch) => {
+	setAuthToken();
+	
 	dispatch({
 		type: LOGOUT,
 	});
+	dispatch({
+		type: ERROR_RESUME,
+	})
+	dispatch(setAlert("Logged out.", "success","app"));
 };
 
 //Load User
@@ -61,7 +68,7 @@ export const register =
 			});
 		} catch (error) {
 			console.log(error);
-			dispatch(setAlert("Register Failed", "danger"));
+			dispatch(setAlert("Register Failed! Please try again", "danger","register"));
 			dispatch({
 				type: REGISTER_FAIL,
 			});
@@ -91,9 +98,9 @@ export const login =
 				payload: response.data,
 			});
 		} catch (error) {
-			console.log(error.response.data.errors);
+
 			error.response.data.errors.forEach(item=>{
-				dispatch(setAlert(item.msg, "danger"));
+				dispatch(setAlert(item.msg, "danger", "login"));
 			})
 			
 			dispatch({

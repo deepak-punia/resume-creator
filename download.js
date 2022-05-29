@@ -78,10 +78,10 @@ router.get("/", (req, res) => {
 	res.sendFile(`${__dirname}/resume.pdf`)
 });
 
-//@route     GET api/download/user
+//@route     POST api/download/user
 //@desc      Download resume for user without watermark
 //@access    Private
-router.get("/user", auth, async (req, res) => {
+router.post("/user", auth, async (req, res) => {
 	const {
 		name,
 		address,
@@ -120,17 +120,14 @@ router.get("/user", auth, async (req, res) => {
 			}
 
 			const pdfFile = await pdf(html);
-			res.set({
-				"Content-Type": "application/pdf",
-				"Content-Length": pdf.length,
-			});
+			
 			res.json({msg:'created'});
 		}
 	);
 });
 
 //@route     POST api/download/save
-//@desc      DAVE resume for user without watermark
+//@desc      SAVE resume for user without watermark
 //@access    Private
 router.post("/save", auth, async (req, res) => {
 	let resumeData = {};
@@ -147,10 +144,13 @@ router.post("/save", auth, async (req, res) => {
 				msg: "You already have saved resume. Please edit on edit page.",
 			});
 		}
+		
 		resumeData.userEmail = user.email;
 		const resume = new Resume(resumeData);
-		await resume.save();
-		res.json({ msg: "Data is Saved in Database." });
+		console.log('1',resumeData.data);
+		const data = await resume.save();
+		console.log('2',data)
+		res.send(data);
 	} catch (err) {
 		console.log(err);
 		return res.status(500).send("Server Error");

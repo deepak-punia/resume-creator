@@ -1,17 +1,35 @@
 const mongoose = require("mongoose");
 
 const EducationSchema = new mongoose.Schema({
-	time: [String],
-	university: [String],
-	course: [String],
-	location: [String],
-	achievement: [String],
+	time:{
+		type: String,
+	},
+	university: {
+		type: String,
+	},
+	course: {
+		type: String,
+	},
+	location: {
+		type: String,
+	},
+	achievement: {
+		type: String,
+	},
 });
 const WorkSchema = new mongoose.Schema({
-	time: [String],
-	company: [String],
-	position: [String],
-	location: [String],
+	time: {
+		type: String,
+	},
+	company: {
+		type: String,
+	},
+	position: {
+		type: String,
+	},
+	location: {
+		type: String,
+	},
 	details: [Array],
 });
 
@@ -41,7 +59,7 @@ const DataSchema = new mongoose.Schema({
 	skills3: {
 		type: Array,
 	},
-	objetive: {
+	objective: {
 		type: String,
 	},
 	education1: {

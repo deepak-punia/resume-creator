@@ -8,3 +8,6 @@ export const LOGOUT = 'LOGOUT';
 export const LOGIN = 'LOGIN';
 export const DWNLD_RESUME = 'DWLND_RESUME';
 export const ERROR_RESUME = 'ERROR_RESUME';
+export const SAVE_RESUME = 'SAVE_RESUME';
+export const LOAD_RESUME = 'LOAD_RESUME';
+export const UPDATE_RESUME = 'UPDATE_RESUME';
