@@ -4,8 +4,8 @@ import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
 import StepFour from "./StepFour";
-import Alerts from '../Alerts';
-import {setAlert} from '../../actions/alert';
+import Alerts from "../Alerts";
+import { setAlert } from "../../actions/alert";
 import {
 	dwnldResume,
 	dwnldResumeUser,
@@ -14,7 +14,7 @@ import {
 } from "../../actions/resume";
 import { useSelector, useDispatch } from "react-redux";
 
-const Final = ({refresh}={refresh: true}) => {
+const Final = ({ refresh } = { refresh: true }) => {
 	const [immediateStateChange, setimmediateStateChange] = useState(false);
 	const user = useSelector((state) => state.auth);
 	const userData = useSelector((state) => state.user);
@@ -81,7 +81,6 @@ const Final = ({refresh}={refresh: true}) => {
 	});
 
 	useEffect(() => {
-
 		if (resumeData.saved) {
 			setformData(resumeData.data);
 
@@ -175,7 +174,7 @@ const Final = ({refresh}={refresh: true}) => {
 	//handle update button
 	const handleUpdate = (e) => {
 		e.preventDefault();
-		dispatch(setAlert("Updating Data...", "info","final"));
+		dispatch(setAlert("Updating Data...", "info", "final"));
 		dispatch(updateResumeData(formData));
 	};
 	//handle form submit
@@ -184,7 +183,9 @@ const Final = ({refresh}={refresh: true}) => {
 		const form = e.currentTarget;
 		if (form.checkValidity() === false) {
 			e.preventDefault();
-			dispatch(setAlert("Please input all required fields.", "danger","final"));
+			dispatch(
+				setAlert("Please input all required fields.", "danger", "final")
+			);
 			e.stopPropagation();
 		} else {
 			//test ends
@@ -208,10 +209,10 @@ const Final = ({refresh}={refresh: true}) => {
 
 			if (user.isAuthenticated) {
 				dispatch(dwnldResumeUser(formData));
-				dispatch(setAlert("Downloading...", "info","final"));
+				dispatch(setAlert("Downloading...", "info", "final"));
 			} else {
 				dispatch(dwnldResume(formData));
-				dispatch(setAlert("Downloading...", "info","final"));
+				dispatch(setAlert("Downloading...", "info", "final"));
 			}
 		}
 		setValidated(true);
@@ -243,9 +244,8 @@ const Final = ({refresh}={refresh: true}) => {
 				},
 			});
 
-			dispatch(setAlert("Saving data...", "info","final"));
+			dispatch(setAlert("Saving data...", "info", "final"));
 			dispatch(saveResume(formData));
-			
 		}
 		setValidated(true);
 	};
@@ -290,12 +290,16 @@ const Final = ({refresh}={refresh: true}) => {
 							<Col>
 								<Form noValidate validated={validated} onSubmit={handleSubmit}>
 									<StepOne formData={formData} handleChange={handleChange} />
-									<Button onClick={nextStep}>Next</Button>
+									<Row>
+										<Col>
+											<Button onClick={nextStep}>Next</Button>
+										</Col>
+									</Row>
 								</Form>
 							</Col>
 						</Row>
 						<Row>
-							<Alerts componentName={"final"}/>
+							<Alerts componentName={"final"} />
 						</Row>
 					</Container>
 				</>
@@ -312,13 +316,19 @@ const Final = ({refresh}={refresh: true}) => {
 										handleEducation1={handleEducation1}
 										handleEducation2={handleEducation2}
 									/>
-									<Button onClick={prevStep}>Prev</Button>
-									<Button onClick={nextStep}>Next</Button>
+									<Row>
+										<Col>
+											<Button onClick={prevStep}>Prev</Button>
+										</Col>
+										<Col>
+											<Button onClick={nextStep}>Next</Button>
+										</Col>
+									</Row>
 								</Form>
 							</Col>
 						</Row>
 						<Row>
-							<Alerts componentName={"final"}/>
+							<Alerts componentName={"final"} />
 						</Row>
 					</Container>
 				</>
@@ -331,13 +341,19 @@ const Final = ({refresh}={refresh: true}) => {
 							<Col>
 								<Form noValidate validated={validated} onSubmit={handleSubmit}>
 									<StepThree skills={skills} handleSkills={handleSkills} />
-									<Button onClick={prevStep}>Prev</Button>
-									<Button onClick={nextStep}>Next</Button>
+									<Row>
+										<Col>
+											<Button onClick={prevStep}>Prev</Button>
+										</Col>
+										<Col>
+											<Button onClick={nextStep}>Next</Button>
+										</Col>
+									</Row>
 								</Form>
 							</Col>
 						</Row>
 						<Row>
-							<Alerts componentName={"final"}/>
+							<Alerts componentName={"final"} />
 						</Row>
 					</Container>
 				</>
@@ -356,30 +372,42 @@ const Final = ({refresh}={refresh: true}) => {
 										details={details}
 										handleDetails={handleDetails}
 									/>
-									<Button onClick={prevStep}>Prev</Button>
-									<Button onClick={handleFinish}>Finish</Button>
-									{immediateStateChange ? (
-										<>
-											<Button type="submit">Download PDF</Button>
-											{user.isAuthenticated && !resumeData.saved ? (
-												<Button onClick={handleSaveClick}>Save Data</Button>
-											) : (
-												<></>
-											)}
-											{user.isAuthenticated && resumeData.saved ? (
-												<Button onClick={handleUpdate}>Update</Button>
-											) : (
-												<></>
-											)}
-										</>
-									) : (
-										<></>
-									)}
+									<Row>
+										<Col md>
+											<Button onClick={prevStep}>Prev</Button>
+										</Col>
+										<Col>
+											<Button onClick={handleFinish}>Finish</Button>
+										</Col>
+										{immediateStateChange ? (
+											<>
+												<Col>
+													<Button type="submit">Download PDF</Button>
+												</Col>
+												{user.isAuthenticated && !resumeData.saved ? (
+													<Col>
+														<Button onClick={handleSaveClick}>Save Data</Button>
+													</Col>
+												) : (
+													<></>
+												)}
+												{user.isAuthenticated && resumeData.saved ? (
+													<Col>
+														<Button onClick={handleUpdate}>Update</Button>
+													</Col>
+												) : (
+													<></>
+												)}
+											</>
+										) : (
+											<></>
+										)}
+									</Row>
 								</Form>
 							</Col>
 						</Row>
 						<Row>
-							<Alerts componentName={"final"}/>
+							<Alerts componentName={"final"} />
 						</Row>
 					</Container>
 				</>

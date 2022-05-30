@@ -6,7 +6,8 @@ import {
 	AUTH_ERROR,
 	LOGOUT,
 	LOGIN,
-	ERROR_RESUME
+	ERROR_RESUME,
+	API_ENDPOINT
 } from "./types";
 import { setAlert } from "./alert";
 import setAuthToken from "../utils/setAuthToken";
@@ -30,7 +31,7 @@ export const loadUser = () => async (dispatch) => {
 		setAuthToken(localStorage.token);
 	}
 	try {
-		const response = await axios.get("http://localhost:5000/api/login");
+		const response = await axios.get(`${API_ENDPOINT}/api/login`);
 
 		dispatch({
 			type: USER_LOADED,
@@ -57,7 +58,7 @@ export const register =
 		};
 		try {
 			const response = await axios.post(
-				"http://localhost:5000/api/users",
+				`${API_ENDPOINT}/api/users`,
 				body,
 				config
 			);
@@ -88,7 +89,7 @@ export const login =
 		};
 		try {
 			const response = await axios.post(
-				"http://localhost:5000/api/login",
+				`${API_ENDPOINT}/api/login`,
 				body,
 				config
 			);

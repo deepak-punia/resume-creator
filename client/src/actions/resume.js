@@ -1,5 +1,5 @@
 import axios from "axios";
-import { DWNLD_RESUME, ERROR_RESUME, SAVE_RESUME, LOAD_RESUME, UPDATE_RESUME } from "./types";
+import { DWNLD_RESUME, ERROR_RESUME, SAVE_RESUME, LOAD_RESUME, UPDATE_RESUME, API_ENDPOINT } from "./types";
 import { saveAs } from 'file-saver';
 import setAuthToken from "../utils/setAuthToken";
 import {setAlert} from './alert';
@@ -19,7 +19,7 @@ export const dwnldResume = (data) => async (dispatch) => {
 		};
 		try {
 			const response = await axios.post(
-				"http://localhost:5000/api/download",
+				`${API_ENDPOINT}/api/download`,
 				body,
 				config
 			);
@@ -31,7 +31,7 @@ export const dwnldResume = (data) => async (dispatch) => {
 			dispatch(setAlert("Error! Please try again.", "danger","final"));
 		}
 		try {
-			const res = await axios.get('http://localhost:5000/api/download', { responseType: 'blob' });
+			const res = await axios.get(`${API_ENDPOINT}/api/download`, { responseType: 'blob' });
 			const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
 			dispatch(setAlert("Your PDF file is downloaded successfully.", "success","final"));
              saveAs(pdfBlob, 'resume.pdf')
@@ -55,7 +55,7 @@ export const dwnldResumeUser = (data) => async (dispatch) => {
 		};
 		try {
 			const response = await axios.post(
-				"http://localhost:5000/api/download/user",
+				`${API_ENDPOINT}/api/download/user`,
 				body,
 				config
 			);
@@ -68,7 +68,7 @@ export const dwnldResumeUser = (data) => async (dispatch) => {
 			
 		}
 		try {
-			const res = await axios.get('http://localhost:5000/api/download/', { responseType: 'blob' });
+			const res = await axios.get(`${API_ENDPOINT}/api/download/`, { responseType: 'blob' });
 			const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
 			dispatch(setAlert("Your PDF file is downloaded successfully.", "success","final"));
 			dispatch(setAlert("Your PDF file is downloaded successfully.", "success","dashboard"));
@@ -94,7 +94,7 @@ export const saveResume = (data) => async (dispatch) => {
 		};
 		try {
 			const response = await axios.post(
-				"http://localhost:5000/api/download/save",
+				`${API_ENDPOINT}/api/download/save`,
 				body,
 				config
 			);
@@ -119,7 +119,7 @@ export const loadResumeData = () => async (dispatch) => {
 		setAuthToken(localStorage.token);
 	}
 	try {
-		const response = await axios.get("http://localhost:5000/api/myresume");
+		const response = await axios.get(`${API_ENDPOINT}/api/myresume`);
 		dispatch(setAlert("Data is loaded.", "success","final"));
 		dispatch({
 			type: UPDATE_RESUME,
@@ -141,7 +141,7 @@ export const updateResumeData = (data) => async (dispatch) => {
 			},
 		};
 	try {
-		const response = await axios.post("http://localhost:5000/api/myresume",body,config);
+		const response = await axios.post(`${API_ENDPOINT}/api/myresume`,body,config);
 		dispatch(setAlert("Data is Updated", "success","final"));
 		dispatch({
 		type: UPDATE_RESUME,

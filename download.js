@@ -5,18 +5,16 @@ const Puppeteer = require("puppeteer");
 const auth = require("./middleware/auth");
 const User = require("./models/users");
 const Resume = require("./models/resume");
-const path = require('path');
-
+const path = require("path");
 
 //create a pdf with
 //@data - html data for pdf
 const pdf = async (data) => {
-	
 	const browser = await Puppeteer.launch({ headless: true });
 	const page = await browser.newPage();
 	await page.setContent(data);
 
-	const pdf = await page.pdf({ path: 'resume.pdf',format: "A4" });
+	const pdf = await page.pdf({ path: "resume.pdf", format: "A4" });
 	await browser.close();
 	return pdf;
 };
@@ -62,11 +60,9 @@ router.post("/", async (req, res) => {
 				console.log(error);
 			}
 
-			
 			const pdfFile = await pdf(html);
-			
-			 
-			res.json({msg:'created'})
+
+			res.json({ msg: "created" });
 		}
 	);
 });
@@ -75,7 +71,7 @@ router.post("/", async (req, res) => {
 //@desc      Download resume without registeration / watermark present on pdf file
 //@access    Public
 router.get("/", (req, res) => {
-	res.sendFile(`${__dirname}/resume.pdf`)
+	res.sendFile(`${__dirname}/resume.pdf`);
 });
 
 //@route     POST api/download/user
@@ -96,7 +92,7 @@ router.post("/user", auth, async (req, res) => {
 		work1,
 		work2,
 	} = req.body;
-	
+
 	res.render(
 		"main",
 		{
@@ -120,8 +116,8 @@ router.post("/user", auth, async (req, res) => {
 			}
 
 			const pdfFile = await pdf(html);
-			
-			res.json({msg:'created'});
+
+			res.json({ msg: "created" });
 		}
 	);
 });
@@ -144,15 +140,14 @@ router.post("/save", auth, async (req, res) => {
 				msg: "You already have saved resume. Please edit on edit page.",
 			});
 		}
-		
+
 		resumeData.userEmail = user.email;
 		const resume = new Resume(resumeData);
-		console.log('1',resumeData.data);
+
 		const data = await resume.save();
-		console.log('2',data)
+
 		res.send(data);
 	} catch (err) {
-		console.log(err);
 		return res.status(500).send("Server Error");
 	}
 });

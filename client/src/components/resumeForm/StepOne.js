@@ -5,6 +5,7 @@ const StepOne = ({formData, handleChange}) => {
     <>
 			<h2>Download Resume PDF </h2>
 			<h3>Fill detaile below to download resume. </h3>
+      <hr />
       <Form.Group className="mb-3" >
 				<Form.Label>First Last Name</Form.Label>
 				<Form.Control
@@ -34,7 +35,7 @@ const StepOne = ({formData, handleChange}) => {
         <Form.Group className="mb-3" >
 				<Form.Label>Objective</Form.Label>
 				<Form.Control
-					type="textarea"
+					as="textarea"
           name="objective"
           placeholder="objective"
           value={formData.objective}

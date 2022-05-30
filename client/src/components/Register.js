@@ -29,6 +29,7 @@ const Register = () => {
 				<Col>
 					<Form>
 						<h2>Register</h2>
+						<hr />
 						<Form.Group className="mb-3" controlId="formBasicUserName">
 							<Form.Label>User Name</Form.Label>
 							<Form.Control
@@ -61,7 +62,7 @@ const Register = () => {
 								onChange={(e) => setPass(e.target.value)}
 							/>
 						</Form.Group>
-						
+
 						<Button
 							variant="primary"
 							type="submit"
