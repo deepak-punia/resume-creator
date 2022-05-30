@@ -11,4 +11,4 @@ export const ERROR_RESUME = 'ERROR_RESUME';
 export const SAVE_RESUME = 'SAVE_RESUME';
 export const LOAD_RESUME = 'LOAD_RESUME';
 export const UPDATE_RESUME = 'UPDATE_RESUME';
-export const API_ENDPOINT = 'http://localhost:5000';
+export const API_ENDPOINT = process.env.baseURL || "http://localhost:5000";
