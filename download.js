@@ -10,7 +10,7 @@ const path = require("path");
 //create a pdf with
 //@data - html data for pdf
 const pdf = async (data) => {
-	const browser = await Puppeteer.launch({ headless: true });
+	const browser = await Puppeteer.launch({ args: ['--no-sandbox'] });
 	const page = await browser.newPage();
 	await page.setContent(data);
 
