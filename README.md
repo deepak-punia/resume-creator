@@ -30,5 +30,10 @@ Creates PDF resume for users.
 - [uuid](https://www.npmjs.com/package/uuid)                                - Genrates random id's
 
 ## Screenshots
-
+![This is an image](https://github.com/deepak-punia/resume-creator/blob/main/images/1.png?raw=true)
+![This is an image](https://github.com/deepak-punia/resume-creator/blob/main/images/2.png?raw=true)
+![This is an image](https://github.com/deepak-punia/resume-creator/blob/main/images/3.png?raw=true)
+![This is an image](https://github.com/deepak-punia/resume-creator/blob/main/images/4.png?raw=true)
+![This is an image](https://github.com/deepak-punia/resume-creator/blob/main/images/5.png?raw=true)
+![This is an image](https://github.com/deepak-punia/resume-creator/blob/main/images/6.png?raw=true)
 
